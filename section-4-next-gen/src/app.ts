@@ -1,10 +1,10 @@
-const userName = "Yong";
+// const userName = "Yong";
 
 // userName = "Maximilian";
 
-let age = 30;
+// let age = 30;
 
-age = 29;
+// age = 29;
 
 // let result;
 // function add(a: number, b: number) {
@@ -28,7 +28,7 @@ const activities = ["등산"];
 activities.push(...hobbies);
 
 const person = {
-  name: "철수",
+  firstName: "철수",
   age: 30,
 };
 
@@ -42,3 +42,11 @@ const add = (...numbers: number[]) => {
 
 const addedNumber = add(10, 9, 8, 7, 5, 1.3);
 console.log(addedNumber);
+
+const [hobby1, hobby2, ...remainingHobbies] = hobbies;
+
+console.log(hobbies, hobby1, hobby2); // ['독서', '요리'] '독서' '요리'
+
+const { firstName: userName, age } = person;
+
+console.log(userName, age); //철수 30
