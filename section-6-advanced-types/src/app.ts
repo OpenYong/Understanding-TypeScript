@@ -23,12 +23,18 @@ type Numeric = number | boolean;
 
 type Universal = Combinable & Numeric;
 
+function add(a: number, b: number): number; // Funtion Overloads
+function add(a: string, b: string): string;
+function add(a: string, b: number): string;
+function add(a: number, b: string): string;
 function add(a: Combinable, b: Combinable) {
   if (typeof a === "string" || typeof b === "string") {
     return a.toString() + b.toString();
   }
   return a + b;
 }
+
+const result = add(1, 5);
 
 type UnknownEmployee = Employee | Admin;
 
@@ -111,6 +117,7 @@ moveAnimal({ type: "bird", flyingSpeed: 10 });
 //   document.querySelector('input[type="text"]')!
 // );
 
+//방법 2.
 const inputElement = document.querySelector(
   'input[type="text"]'
 )! as HTMLInputElement;
@@ -118,3 +125,41 @@ const inputElement = document.querySelector(
 console.log(inputElement);
 
 inputElement.value = "Hi";
+
+// Index Properties - 키 네임을 모를때
+interface ErrorContainer {
+  [prop: string]: string;
+}
+
+const errorBag: ErrorContainer = {
+  email: "유효한 이메일 주소가 아닙니다!",
+  username: "대문자로 시작해야합니다!",
+};
+
+// Optional Chaining
+type Job = {
+  title: string;
+  description: string;
+};
+
+type UserData = {
+  id: string;
+  name: string;
+  job?: Job;
+};
+
+const fetchedUserData: UserData = {
+  id: "u1",
+  name: "Yong",
+  //   job: { title: "Frontend Developer", description: "Grade A" },
+};
+
+// console.log(fetchedUserData.job && fetchedUserData.job.title)
+console.log(fetchedUserData?.job?.title);
+
+const userInput = "";
+
+// const storedData = userInput || "DEFAULT";
+const storedData = userInput || "DEFAULT";
+
+console.log(storedData);
