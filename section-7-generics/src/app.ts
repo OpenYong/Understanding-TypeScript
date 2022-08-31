@@ -50,3 +50,48 @@ function countAndDescribe<T extends lengthy>(element: T): [T, string] {
 
 console.log(countAndDescribe("안녕!"));
 console.log(countAndDescribe(["iOS", "Android"]));
+// console.log(countAndDescribe(10));
+
+// 98 - keyof
+function extractAndConvert<T extends object, U extends keyof T>(
+  obj: T,
+  key: U
+) {
+  return obj[key];
+}
+
+extractAndConvert({ name: "yong" }, "name");
+
+class DataStorage<T extends string | number | boolean> {
+  private data: T[] = [];
+
+  addItem(item: T) {
+    this.data.push(item);
+  }
+
+  removeItem(item: T) {
+    if (this.data.indexOf(item) === -1) {
+      return;
+    }
+    this.data.splice(this.data.indexOf(item), 1);
+  }
+
+  getItems() {
+    return [...this.data];
+  }
+}
+
+const textStorage = new DataStorage<string>();
+textStorage.addItem("Yong");
+textStorage.addItem("Max");
+textStorage.removeItem("Max");
+console.log(textStorage.getItems());
+
+const numberStorage = new DataStorage<number>();
+
+const objStorage = new DataStorage<object>();
+const objYong = { name: "Yong" };
+objStorage.addItem(objYong);
+objStorage.addItem({ name: "Max" });
+objStorage.removeItem(objYong);
+console.log(objStorage.getItems());
