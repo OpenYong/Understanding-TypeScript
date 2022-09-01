@@ -117,3 +117,27 @@ function createCourseGoal(
 
 const names: Readonly<string[]> = ["Yong", "Movies"];
 // names.push('Kim'); // 에러 Readonly이기 때문에
+
+class DataStorageUnion {
+  private data: (string | number | boolean)[] = [];
+
+  addItem(item: string | number | boolean) {
+    this.data.push(item);
+  }
+
+  removeItem(item: string | number | boolean) {
+    if (this.data.indexOf(item) === -1) {
+      return;
+    }
+    this.data.splice(this.data.indexOf(item), 1);
+  }
+
+  getItems() {
+    return [...this.data];
+  }
+}
+
+const textStorageUnion = new DataStorageUnion();
+textStorageUnion.addItem("Yong");
+textStorageUnion.addItem(10);
+textStorageUnion.removeItem("Max");
