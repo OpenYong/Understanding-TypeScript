@@ -118,6 +118,10 @@ function createCourseGoal(
 const names: Readonly<string[]> = ["Yong", "Movies"];
 // names.push('Kim'); // 에러 Readonly이기 때문에
 
+// 102. Generic Types vs Union Types
+// 유니온으로 다시 작성해보았음.
+// 단점은 숫자 10을 넣어도 에러를 발생시키지 않는다는 점.
+// 제네릭을 사용하면 한가지 타입만 사용하도록 해준다.
 class DataStorageUnion {
   private data: (string | number | boolean)[] = [];
 
