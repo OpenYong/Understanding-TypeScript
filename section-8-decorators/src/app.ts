@@ -90,3 +90,9 @@ class Product {
     return this._price * (1 + tax);
   }
 }
+
+// 아무리 객체를 많이 생성해도 데코레이터가 실행되지 않는다.
+// 메타프로그래밍 컨셉 중요
+const p1 = new Product("Book", 19);
+const p2 = new Product("Book 2", 29); 
+
