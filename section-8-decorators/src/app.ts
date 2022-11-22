@@ -8,14 +8,20 @@ function Logger(logString: string) {
 
 function WithTemplate(template: string, hookId: string) {
   console.log("TEMPLATE FACTORY");
-  return function (constructor: any) {
-    console.log("렌더링 Template");
-    const hookEl = document.getElementById(hookId);
-    const p = new constructor();
-    if (hookEl) {
-      hookEl.innerHTML = template;
-      hookEl.querySelector("h1")!.textContent = p.name;
-    }
+  return function <T extends { new (...args: any[]): { name: string } }>(
+    originalConstructor: T
+  ) {
+    return class extends originalConstructor {
+      constructor(..._: any[]) {
+        super(); // originalConstructor 호출
+        console.log("렌더링 Template");
+        const hookEl = document.getElementById(hookId);
+        if (hookEl) {
+          hookEl.innerHTML = template;
+          hookEl.querySelector("h1")!.textContent = this.name;
+        }
+      }
+    };
   };
 }
 
@@ -94,5 +100,4 @@ class Product {
 // 아무리 객체를 많이 생성해도 데코레이터가 실행되지 않는다.
 // 메타프로그래밍 컨셉 중요
 const p1 = new Product("Book", 19);
-const p2 = new Product("Book 2", 29); 
-
+const p2 = new Product("Book 2", 29);
