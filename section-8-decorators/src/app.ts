@@ -31,3 +31,5 @@ class Person {
 }
 
 const firstPerson = new Person();
+
+console.log(firstPerson);
