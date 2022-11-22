@@ -1,4 +1,5 @@
 function Logger(logString: string) {
+  console.log("LOGGER FACTORY");
   return function (constructor: Function) {
     console.log(logString);
     console.log(constructor);
@@ -6,9 +7,9 @@ function Logger(logString: string) {
 }
 
 function WithTemplate(template: string, hookId: string) {
-  // constructor를 사용하지 않을때 언더스코어('_')로 이름을 설정해줄 수 있다.
-  //   return function (_: Function) {
+  console.log("TEMPLATE FACTORY");
   return function (constructor: any) {
+    console.log("렌더링 Template");
     const hookEl = document.getElementById(hookId);
     const p = new constructor();
     if (hookEl) {
@@ -19,6 +20,7 @@ function WithTemplate(template: string, hookId: string) {
 }
 
 // @Logger('PERSON 로그')
+@Logger("Logging")
 @WithTemplate("<h1>나의 Person 객체</h1>", "app")
 class Person {
   name = "Yong";
@@ -29,5 +31,3 @@ class Person {
 }
 
 const firstPerson = new Person();
-
-console.log(firstPerson);
