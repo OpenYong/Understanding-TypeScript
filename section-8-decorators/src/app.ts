@@ -129,3 +129,41 @@ p.showMessage();
 
 const button = document.querySelector("button")!;
 button.addEventListener("click", p.showMessage);
+
+// 115. Validation with Decorators - First Steps
+
+function Required() {}
+
+function PositiveNumber() {}
+
+function validate(obj: object) {}
+
+class Course {
+  @Required
+  title: string;
+  @PositiveNumber
+  price: number;
+
+  constructor(t: string, p: number) {
+    this.title = t;
+    this.price = p;
+  }
+}
+
+const courseForm = document.querySelector("form")!;
+courseForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const titleEl = document.getElementById("title") as HTMLInputElement;
+  const priceEl = document.getElementById("price") as HTMLInputElement;
+
+  const title = titleEl.value;
+  const price = +priceEl.value;
+
+  const createdCourse = new Course(title, price);
+
+  if (!validate(createdCourse)) {
+    alert("유효하지 않은 값, 다시 시도 해주세요!");
+    return;
+  }
+  console.log(createdCourse);
+});
