@@ -1,3 +1,20 @@
+// Autobind
+function autobind(
+  _: any,
+  _2: string,
+  descripter: PropertyDescriptor
+) {
+  const originalMethod = descripter.value;
+  const adjDescriptor: PropertyDescriptor = {
+    configurable: true,
+    get() {
+      const boundFn = originalMethod.bind(this);
+      return boundFn;
+    },
+  };
+  return adjDescriptor;
+}
+
 class ProjectInput {
   templateElement: HTMLTemplateElement;
   hostElement: HTMLDivElement;
@@ -33,13 +50,14 @@ class ProjectInput {
     this.attach();
   }
 
+  @autobind
   private submitHandler(event: Event) {
     event.preventDefault();
     console.log(this.titleInputElement.value);
   }
 
   private configure() {
-    this.element.addEventListener("submit", this.submitHandler.bind(this)); // 데코레이터로 autobind 해보기.
+    this.element.addEventListener("submit", this.submitHandler); // 데코레이터로 autobind 해보기.
   }
 
   private attach() {
