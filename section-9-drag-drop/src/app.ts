@@ -1,9 +1,5 @@
 // Autobind
-function autobind(
-  _: any,
-  _2: string,
-  descripter: PropertyDescriptor
-) {
+function autobind(_: any, _2: string, descripter: PropertyDescriptor) {
   const originalMethod = descripter.value;
   const adjDescriptor: PropertyDescriptor = {
     configurable: true,
@@ -50,10 +46,39 @@ class ProjectInput {
     this.attach();
   }
 
+  private getUserInput(): [string, string, number] | void {
+    const enteredTitle = this.titleInputElement.value;
+    const enteredDescription = this.descriptionInputElement.value;
+    const enteredPeople = this.peopleInputElement.value;
+
+    // naive한 유효성 검사.
+    if (
+      enteredTitle.trim().length === 0 ||
+      enteredDescription.trim().length === 0 ||
+      enteredPeople.trim().length === 0
+    ) {
+      alert("유효하지 않은 값입니다.");
+      return; // void
+    } else {
+      return [enteredTitle, enteredDescription, +enteredPeople];
+    }
+  }
+
+  private clearInput() {
+    this.titleInputElement.value = "";
+    this.descriptionInputElement.value = "";
+    this.peopleInputElement.value = "";
+  }
+
   @autobind
   private submitHandler(event: Event) {
     event.preventDefault();
-    console.log(this.titleInputElement.value);
+    const userInput = this.getUserInput();
+    if (Array.isArray(userInput)) {
+      const [title, desc, people] = userInput;
+      console.log(title, desc, people);
+      this.clearInput();
+    }
   }
 
   private configure() {
